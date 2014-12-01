@@ -16,6 +16,15 @@ def readTrainingData():
 		
 	return trainingData;
 
+def readXData(filename):
+	with open(filename,'rb') as csvfile:
+		r = csv.reader(csvfile,delimiter=',');
+		data = list();
+		for row in r:
+			data.append(row.pop(0))
+	return data;
+
+
 def writeWordListToCSV(li,filename):
 	with open(filename,'wb') as csvfile:
 		liWriter = csv.writer(csvfile,dialect='excel')
