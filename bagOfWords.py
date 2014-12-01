@@ -44,8 +44,7 @@ def generateBagOfWords(td,wordList):
 	return bow;
 
 
-def getBOW():
-	td = cf.readTrainingData()
+def getBOW(td):
 
 	# Generating the wordList
 	#wordList = getWordList(td)
@@ -62,18 +61,16 @@ def getBOW():
 	bow = genfromtxt('training_bow.csv',delimiter=',')
 	return bow;
 
-def getCityCodes():
-	td = cf.readTrainingData();
+def getCityCodes(td):
 
 	cityCodes = zeros((len(td.cityCodes),1));
 	j=0;
 	for city in td.cityCodes:
-		cityCodes[j] = city;
+		cityCodes[j] = city.pop(0);
 		j=j+1
 	return cityCodes;
 	
-def getCountryCodes():
-	td = cf.readTrainingData()	
+def getCountryCodes(td):
 	countryCodes = zeros((len(td.countryCodes),1))
 	i=0
 	for c in td.countryCodes:
