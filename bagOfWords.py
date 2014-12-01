@@ -1,6 +1,7 @@
 import csvfuncs as cf
 import difflib as dl
 from numpy import *
+import csv
 
 def getWordList(td):
 	print "getting word list from list of cities"
@@ -17,12 +18,21 @@ def getWordList(td):
 	print "Word List is complete"
 	print "number of words: ",format(len(wordList))
 	return wordList;
+def getWordListFromCSV(filename):
+	with open(filename,'rb') as cf:
+		wordList = list();
+		wlr = csv.reader(cf)
+		for row in wlr:
+			wordList.append(row.pop(0))
+	print "wordList read from  {}".format(filename)
+	print "number of words is {}".format(len(wordList))
+	return wordList;	
 
 def getBagOfWords(td,wordList):
 	print "generating Bag of Words"
 	bow = zeros((len(td.cities),len(wordList)))	
 	i = 0;
-	for city in td.city:
+	for city in td.cities:
 		print "city no {}".format(i)
 		words = city.split(' ')
 		for word in words:
@@ -33,6 +43,19 @@ def getBagOfWords(td,wordList):
 	print "Bag of Words Generated"
 	return bow;
 
+
 td = cf.readTrainingData()
-wordList = getWordList(td)
-bow = getBagOfWords(td,wordList)
+
+# Generating the wordList
+#wordList = getWordList(td)
+#cf.writeWordListToCSV(wordList,'training_wordList.csv');
+
+# reading saved WordList
+#wordList = getWordListFromCSV('training_wordList.csv');
+
+#Bag Of Words model generation
+#bow = getBagOfWords(td,wordList)
+#cf.writeListToCSV(bow,'training_bow.csv')
+
+#BOW from file
+bow = genfromtxt('training_bow.csv',delimiter=',')

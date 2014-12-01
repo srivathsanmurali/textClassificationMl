@@ -16,9 +16,15 @@ def readTrainingData():
 		
 	return trainingData;
 
+def writeWordListToCSV(li,filename):
+	with open(filename,'wb') as csvfile:
+		liWriter = csv.writer(csvfile,dialect='excel')
+		for row in li:
+			liWriter.writerow([row])
+		print "list written to {}".format(filename)
 def writeListToCSV(li,filename):
 	with open(filename,'wb') as csvfile:
-		liWriter = csv.writer(csvfile,delimiter=',')
+		liWriter = csv.writer(csvfile,dialect='excel')
 		for row in li:
 			liWriter.writerow(row)
 		print "list written to {}".format(filename)
