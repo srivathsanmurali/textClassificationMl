@@ -28,7 +28,7 @@ def getWordListFromCSV(filename):
 	print "number of words is {}".format(len(wordList))
 	return wordList;	
 
-def getBagOfWords(td,wordList):
+def generateBagOfWords(td,wordList):
 	print "generating Bag of Words"
 	bow = zeros((len(td.cities),len(wordList)))	
 	i = 0;
@@ -44,18 +44,39 @@ def getBagOfWords(td,wordList):
 	return bow;
 
 
-td = cf.readTrainingData()
+def getBOW():
+	td = cf.readTrainingData()
 
-# Generating the wordList
-#wordList = getWordList(td)
-#cf.writeWordListToCSV(wordList,'training_wordList.csv');
+	# Generating the wordList
+	#wordList = getWordList(td)
+	#cf.writeWordListToCSV(wordList,'training_wordList.csv');
 
-# reading saved WordList
-#wordList = getWordListFromCSV('training_wordList.csv');
+	# reading saved WordList
+	#wordList = getWordListFromCSV('training_wordList.csv');
 
-#Bag Of Words model generation
-#bow = getBagOfWords(td,wordList)
-#cf.writeListToCSV(bow,'training_bow.csv')
+	#Bag Of Words model generation
+	#bow = getBagOfWords(td,wordList)
+	#cf.writeListToCSV(bow,'training_bow.csv')
 
-#BOW from file
-bow = genfromtxt('training_bow.csv',delimiter=',')
+	#BOW from file
+	bow = genfromtxt('training_bow.csv',delimiter=',')
+	return bow;
+
+def getCityCodes():
+	td = cf.readTrainingData();
+
+	cityCodes = zeros((len(td.cityCodes),1));
+	j=0;
+	for city in td.cityCodes:
+		cityCodes[j] = city;
+		j=j+1
+	return cityCodes;
+	
+def getCountryCodes():
+	td = cf.readTrainingData()	
+	countryCodes = zeros((len(td.countryCodes),1))
+	i=0
+	for c in td.countryCodes:
+		countryCodes[i] = c;
+		i=i+1
+	return countryCodes;
