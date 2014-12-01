@@ -16,8 +16,16 @@ def readTrainingData():
 		
 	return trainingData;
 
-td = readTrainingData();
-print len(td.cities)
-print td.cities[0]
-print td.cityCodes[0]
-print td.countryCodes[0]
+def writeListToCSV(li,filename):
+	with open(filename,'wb') as csvfile:
+		liWriter = csv.writer(csvfile,delimiter=',')
+		for row in li:
+			liWriter.writerow(row)
+		print "list written to {}".format(filename)
+
+def testRead():
+	td = readTrainingData();
+	print len(td.cities)
+	print td.cities[0]
+	print td.cityCodes[0]
+	print td.countryCodes[0]
