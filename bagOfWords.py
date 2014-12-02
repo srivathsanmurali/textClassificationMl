@@ -7,7 +7,7 @@ def getWordList(td):
 	print "getting word list from list of cities"
 	wordList = list()
 	i = 0;
-	for city in td.cities:
+	for city in td:
 		words = city.split(' ')
 		for word in words:
 			word = word.upper()
@@ -30,36 +30,55 @@ def getWordListFromCSV(filename):
 
 def generateBagOfWords(td,wordList):
 	print "generating Bag of Words"
-	bow = zeros((len(td.cities),len(wordList)))	
+	bow = zeros((len(td),len(wordList)))	
 	i = 0;
-	for city in td.cities:
+	for city in td:
 		print "city no {}".format(i)
 		words = city.split(' ')
 		for word in words:
 			word = word.upper()
-			word = dl.get_close_matches(word,wordList).pop(0)
-			bow[i,wordList.index(word)] = 1;
+			word = dl.get_close_matches(word,wordList)
+			if(len(word) > 0):
+				word = word.pop(0)
+				bow[i,wordList.index(word)] = 1;
 		i = i+1
 	print "Bag of Words Generated"
 	return bow;
+def getBOWFromFile(filename):
+	#BOW from file
+	bow = genfromtxt(filename,delimiter=',')
+	print "successfully read BOW from " + filename
+	return bow;
 
-
-def getBOW(td):
-
+def getBOWTrain(td,filename):
 	# Generating the wordList
-	#wordList = getWordList(td)
-	#cf.writeWordListToCSV(wordList,'training_wordList.csv');
+	wordList = getWordList(td)
+	filen = filename + "_wordList.csv"
+	cf.writeWordListToCSV(wordList,filen);
 
 	# reading saved WordList
 	#wordList = getWordListFromCSV('training_wordList.csv');
 
 	#Bag Of Words model generation
-	#bow = getBagOfWords(td,wordList)
-	#cf.writeListToCSV(bow,'training_bow.csv')
+	bow = generateBagOfWords(td,wordList)
+	filen = filename + "_BOW.csv"
+	cf.writeListToCSV(bow,filen)
+	return bow
 
-	#BOW from file
-	bow = genfromtxt('training_bow.csv',delimiter=',')
-	return bow;
+
+################################################
+#
+#
+#	for validation and test data
+#
+#
+def getBOW(td,trainWordList,filename):
+	#Bag Of Words model generation
+	bow = generateBagOfWords(td,trainWordList)
+	filen = filename + "_BOW.csv"
+	cf.writeListToCSV(bow,filen)
+	return bow
+##################################################
 
 def getCityCodes(td):
 
