@@ -14,13 +14,13 @@ trainY2   = td.countryCodes
 validXBow = bow.getBOWFromFile('validation_BOW.csv')
 
 print "training a RandomForestClassifier with the training data for Y1"
-clfY1 = RandomForestClassifier(n_estimators=10)
+clfY1 = RandomForestClassifier(n_estimators=10,max_features='log2')
 clfY1.fit(trainXBow,trainY1)
 print "predicting Y1 using the RandomForestClassifier"
 Y1_hat = clfY1.predict(validXBow)
 
 print "training a RandomForestClassifier with the training data for Y2"
-clfY2 = RandomForestClassifier(n_estimators=10)
+clfY2 = RandomForestClassifier(n_estimators=10,max_features='log2')
 clfY2.fit(trainXBow,trainY2)
 print "predicting Y2 using the RandomForestClassifier"
 Y2_hat = clfY2.predict(validXBow)
