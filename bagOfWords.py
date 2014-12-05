@@ -1,6 +1,7 @@
 import csvfuncs as cf
 import difflib as dl
 from numpy import *
+import strMatchCmp as smc
 import csv
 
 def getWordList(td):
@@ -11,17 +12,20 @@ def getWordList(td):
 		words = city.split(' ')
 		for word in words:
 			word = word.upper()
-			match = dl.get_close_matches(word,wordList);
+			#match = dl.get_close_matches(word,wordList);
+			match = smc.findBestMatch(word,wordList)
 			if(match == []): 
 				wordList.append(word)
-				print "word count :" + str(len(wordList))
+				print word
+				#print "word count :" + str(len(wordList))
 			else:
 				match_word = match.pop(0)
 				diff = len(match_word) - len(word)
 				diff = abs(diff)
 				if(abs > 1):
 					wordList.append(word)
-					print "word count :" + str(len(wordList))
+					print word
+					#print "word count :" + str(len(wordList))
 
 		print "row {0:6d} done".format(i);
 		i = i+1;
